@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,8 +50,6 @@ public class TrackedFiles {
                 new File(Paths.get(hostDirectoryFiles.base_directory, path.toString()).toString()).delete();
                 Files.copy(Paths.get(this.base_directory, path.toString()), Paths.get(hostDirectoryFiles.base_directory, path.toString()));
             }
-//            this.fileLocalPathToModifiedTime.remove(path);
-//            hostDirectoryFiles.fileLocalPathToModifiedTime.remove(path);
         }
         for (Path path : hostDirectoryFiles.fileLocalPathToModifiedTime.keySet()){
             if (this.fileLocalPathToModifiedTime.get(path) == null) {

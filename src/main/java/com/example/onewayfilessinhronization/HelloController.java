@@ -1,5 +1,6 @@
 package com.example.onewayfilessinhronization;
 
+import com.example.onewayfilessinhronization.exceptions.NotCorrectLinkException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,19 +12,22 @@ import java.nio.file.Paths;
 import java.time.Instant;
 
 public class HelloController {
-    public TextField originalDirectory;
-    public TextField editableDirectory;
+    public TextField donorLink;
+    public TextField recipientLink;
     @FXML
     private Label status;
 
     public void onSyncButtonClick(ActionEvent actionEvent) throws IOException {
-        if (!Files.isDirectory(Paths.get(originalDirectory.getText())) | !Files.isDirectory(Paths.get(editableDirectory.getText()))){
+        status.setText("please wait...");
+        Pusher pusher;
+        try {
+            pusher = new Pusher(donorLink.getText(), recipientLink.getText());
+        } catch (NotCorrectLinkException err) {
             status.setText("enter not correct");
             return;
         }
-        status.setText("please wait...");
-        TrackedFiles originalDirectoryFiles = new TrackedFiles(originalDirectory.getText());
-        originalDirectoryFiles.pushTo(editableDirectory.getText());
+
+        pusher.push();
         status.setText("Completed");
     }
 }

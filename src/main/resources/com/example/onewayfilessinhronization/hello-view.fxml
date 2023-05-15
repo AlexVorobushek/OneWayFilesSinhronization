@@ -12,8 +12,8 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <TextField promptText="original directory" fx:id="originalDirectory"/>
-    <TextField promptText="editable directory" fx:id="editableDirectory"/>
+    <TextField promptText="donor link" fx:id="donorLink"/>
+    <TextField promptText="recipient link" fx:id="recipientLink"/>
     <Button text="synchronize" onAction="#onSyncButtonClick"/>
     <Label fx:id="status"/>
 </VBox>

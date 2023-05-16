@@ -1,6 +1,9 @@
 package com.example.onewayfilessinhronization;
 
-import com.example.onewayfilessinhronization.exceptions.NotCorrectLinkException;
+import com.example.onewayfilessinhronization.exceptions.CanNotPushException;
+import com.example.onewayfilessinhronization.exceptions.NoDiskSpaceException;
+import com.example.onewayfilessinhronization.fileSpases.Directory;
+import javafx.scene.effect.Light;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,19 +17,21 @@ public class Pusher {
         this.recipient = recipient;
     }
 
-    public Pusher(String donorLink, String recipientLink) throws NotCorrectLinkException {
+    public Pusher(String donorLink, String recipientLink) throws CanNotPushException {
         donor = InitFileSpace.init(donorLink);
         recipient = InitFileSpace.init(recipientLink);
+        if (recipient.getClass() == Directory.class & !((Directory) recipient).isFreeDiskEnoughToPush(donor))
+            throw new NoDiskSpaceException();
     }
 
     public void push() throws IOException {
         ArrayList<Path> donorExistFiles = donor.getExistingFilesLocalPaths();
         ArrayList<Path> recipientExistFiles = recipient.getExistingFilesLocalPaths();
 
+        for (Path filePath : recipientExistFiles)
+            if (donor.getFileTime(filePath) == null) recipient.delFile(filePath);
         for (Path filePath : donorExistFiles)
             if (!donor.getFileTime(filePath).equals(recipient.getFileTime(filePath)))
                 recipient.pushFileInto(filePath, donor.getFilePathToRead(filePath));
-        for (Path filePath : recipientExistFiles)
-            if (donor.getFileTime(filePath) == null) recipient.delFile(filePath);
     }
 }

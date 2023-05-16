@@ -12,6 +12,6 @@ public interface InitFileSpace {
         Path path = Path.of(link);
         if (Files.isDirectory(path))
             return new Directory(path);
-        throw new NotCorrectLinkException("link "+link+" is not correct");
+        throw new NotCorrectLinkException(link);
     };
 }

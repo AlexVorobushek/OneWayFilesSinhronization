@@ -1,5 +1,6 @@
 package com.example.onewayfilessinhronization;
 
+import com.example.onewayfilessinhronization.exceptions.CanNotPushException;
 import com.example.onewayfilessinhronization.exceptions.NotCorrectLinkException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,8 +23,8 @@ public class HelloController {
         Pusher pusher;
         try {
             pusher = new Pusher(donorLink.getText(), recipientLink.getText());
-        } catch (NotCorrectLinkException err) {
-            status.setText("enter not correct");
+        } catch (CanNotPushException err) {
+            status.setText(err.getMessage());
             return;
         }
 

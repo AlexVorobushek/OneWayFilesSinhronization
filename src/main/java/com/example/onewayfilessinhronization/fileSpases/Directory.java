@@ -51,6 +51,16 @@ public class Directory extends FileSpace {
         Files.copy(directoryFrom, directoryTo, StandardCopyOption.REPLACE_EXISTING);
     }
 
+    @Override
+    protected long getWorkFilesWeight() {
+        return 0;
+    }
+
+    public boolean isFreeDiskEnoughToPush(FileSpace donor){
+        return true;
+    }
+
+
     private ArrayList<Path> recursiveFileSearch(Path directory) {
         ArrayList<Path> listWithFileNames = new ArrayList<>();
         File f = new File(directory.toString());

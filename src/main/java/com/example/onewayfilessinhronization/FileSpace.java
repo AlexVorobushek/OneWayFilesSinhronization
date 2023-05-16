@@ -29,4 +29,5 @@ abstract public class FileSpace {
 
     abstract public void delFile(Path filePath) throws IOException;
     abstract public void pushFileInto(Path filePath, Path directoryFrom) throws IOException;
+    abstract protected long getWorkFilesWeight();
 }
